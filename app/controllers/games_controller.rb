@@ -17,7 +17,7 @@ class GamesController < ApplicationController
 
   def join
     if @game.join(as: current_user)
-      @game.broadcast_replace(target: "game_state", partial: "games/game_state", locals: { game: @game, current_user: current_user })
+      refresh_state
     else
       raise @game.errors.full_messages
     end
@@ -30,7 +30,7 @@ class GamesController < ApplicationController
       @game.update!(opponent_choice: params[:choice])
     end
 
-    @game.broadcast_replace(target: "game_state", partial: "games/game_state", locals: { game: @game, current_user: current_user })
+    refresh_state
   end
 
   private
@@ -42,5 +42,10 @@ class GamesController < ApplicationController
   helper_method :current_user
   def current_user
     session[:user_name] ||= Player.new.name
+  end
+
+  def refresh_state
+    @game.broadcast_replace_to(@game, :host, target: "game_state", partial: "games/game_state", locals: { game: @game, player: @game.host })
+    @game.broadcast_replace_to(@game, :opponent, target: "game_state", partial: "games/game_state", locals: { game: @game, player: @game.opponent })
   end
 end

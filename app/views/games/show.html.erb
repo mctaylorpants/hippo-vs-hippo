@@ -3,8 +3,8 @@
 <h1>Room name: <strong><%= @game.name %></strong></h1>
 
 <h2>Players</h2>
-<%= turbo_stream_from @game %>
-<%= render partial: "game_state", locals: { game: @game } %>
+<%= turbo_stream_from @game, @game.role_of(current_user) %>
+<%= render partial: "game_state", locals: { game: @game, player: current_user } %>
 
 <ul>
   <li><%= link_to "charge", make_choice_path(@game, choice: "charge"), data: { turbo_method: :post } %></li>

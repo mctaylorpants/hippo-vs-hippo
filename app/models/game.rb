@@ -12,6 +12,18 @@ class Game < ApplicationRecord
   validates :host_choice, inclusion: { in: VALID_CHOICES }, allow_nil: true
   validates :opponent_choice, inclusion: { in: VALID_CHOICES }, allow_nil: true
 
+  def role_of(player)
+    player == host ? :host : :opponent
+  end
+
+  def host?(player)
+    player == host
+  end
+
+  def opponent?(player)
+    player == opponent
+  end
+
   def can_join?(as:)
     host != as && opponent.nil?
   end

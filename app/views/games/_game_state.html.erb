@@ -5,6 +5,9 @@
     <%= "Winner: #{game.winner}" if game.winner %>
   </h2>
 
+  <% if game.host?(player) %>
+    <h3>You are the host</h3>
+  <% end %>
 
   <ul>
     <li>host: <%= game.host %> <%= "chose #{game.host_choice}" if game.host_choice.present? %></li>
