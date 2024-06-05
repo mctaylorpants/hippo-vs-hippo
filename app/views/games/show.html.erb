@@ -1,0 +1,15 @@
+<input type="hidden" id="game-id" value="<%= @game.id %>">
+
+<h1>Room name: <strong><%= @game.name %></strong></h1>
+
+<h2>Players</h2>
+<%= turbo_stream_from @game %>
+<%= render partial: "game_state", locals: { game: @game } %>
+
+<% if @game.can_join?(as: current_user_uuid) %>
+  <h2>Join the game as <%= current_user_uuid %></h2>
+  <%= form_tag join_game_path(@game), method: :post do %>
+    <%= submit_tag "Join game" %>
+  <% end %>
+<% end %>
+
