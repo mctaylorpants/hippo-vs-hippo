@@ -45,7 +45,7 @@ class GamesController < ApplicationController
   end
 
   def refresh_state
-    @game.broadcast_replace_to(@game, :host, target: "game_state", partial: "games/game_state", locals: { game: @game, player: @game.host })
-    @game.broadcast_replace_to(@game, :opponent, target: "game_state", partial: "games/game_state", locals: { game: @game, player: @game.opponent })
+    @game.broadcast_replace_to(@game, :host, target: "game_state", partial: "games/game_state_for_host", locals: { game: @game, player: @game.host })
+    @game.broadcast_replace_to(@game, :opponent, target: "game_state", partial: "games/game_state_for_opponent", locals: { game: @game, player: @game.opponent })
   end
 end

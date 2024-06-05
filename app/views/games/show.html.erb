@@ -4,17 +4,9 @@
 
 <h2>Players</h2>
 <%= turbo_stream_from @game, @game.role_of(current_user) %>
-<%= render partial: "game_state", locals: { game: @game, player: current_user } %>
-
-<ul>
-  <li><%= link_to "charge", make_choice_path(@game, choice: "charge"), data: { turbo_method: :post } %></li>
-  <li><%= link_to "submerge", make_choice_path(@game, choice: "submerge"), data: { turbo_method: :post } %></li>
-  <li><%= link_to "chomp", make_choice_path(@game, choice: "chomp"), data: { turbo_method: :post } %></li>
-</ul>
-<% if @game.can_join?(as: current_user) %>
-  <h2>Join the game as <%= current_user %></h2>
-  <%= form_tag join_game_path(@game), method: :post do %>
-    <%= submit_tag "Join game" %>
-  <% end %>
+<% if @game.host?(current_user) %>
+  <%= render partial: "game_state_for_host", locals: { game: @game, player: current_user } %>
+<% else %>
+  <%= render partial: "game_state_for_opponent", locals: { game: @game, player: current_user } %>
 <% end %>
 
