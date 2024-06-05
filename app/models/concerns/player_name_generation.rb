@@ -1,4 +1,4 @@
-module NameGeneration
+module PlayerNameGeneration
   ADJECTIVES = %w[
     agile
     boorish
@@ -36,11 +36,11 @@ module NameGeneration
     riverhorse
   ]
 
-  def generate_name
+  def generate_player_name
     [
-      ADJECTIVES.sample,
-      COLOURS.sample,
-      HIPPO_NAMES.sample
-    ].join("-")
+      ADJECTIVES.sample.capitalize,
+      COLOURS.sample.capitalize,
+      HIPPO_NAMES.sample.capitalize
+    ].join(" ")
   end
 end

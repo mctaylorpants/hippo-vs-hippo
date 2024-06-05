@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   resources :games
   post "games/:id/join" => "games#join", as: :join_game
+  post "games/:id/choose" => "games#choose", as: :make_choice
 end

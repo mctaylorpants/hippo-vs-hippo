@@ -1,6 +1,13 @@
 <%= turbo_frame_tag "game_state" do %>
+  <h1>current state: <%= game.current_state %></h1>
+
+  <h2>
+    <%= "Winner: #{game.winner}" if game.winner %>
+  </h2>
+
+
   <ul>
-    <li>host: <%= game.host_uuid %></li>
-    <li>opponent: <%= game.opponent_uuid %></li>
+    <li>host: <%= game.host %> <%= "chose #{game.host_choice}" if game.host_choice.present? %></li>
+    <li>opponent: <%= game.opponent %> <%= "chose #{game.opponent_choice}" if game.opponent_choice.present? %></li>
   </ul>
 <% end %>

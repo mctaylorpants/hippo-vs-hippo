@@ -19,6 +19,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_183305) do
     t.datetime "updated_at", null: false
     t.text "opponent_uuid"
     t.text "host_uuid"
+    t.text "opponent"
+    t.text "host"
   end
 
 end
