@@ -15,10 +15,21 @@
   <% end %>
 
 
+  <!-- current player -->
   <div class="flex items-center ml-4 mr-4 p-2 <%= game.winner?(current_player) && "bg-gradient-to-l from-yellow-50 to-yellow-200" %>">
-    <div class="shrink-0 rounded-2xl border border-2 border-purple-500 bg-[url('/hippo01.jpg')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
+    <div class="shrink-0 rounded-2xl border border-2 border-purple-500 bg-[url('/<%= game.avatar_for(current_player) %>')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
     <p class="text-gray-500 p-4">
-      <%= current_player %> (you)
+      <% if game.current_state == :awaiting_opponent && !game.host?(current_player) %>
+        <div class="max-w-40 text-pretty rounded-lg text-center bg-gray-100 m-4 p-4 border text-blue-500">
+          <%= link_to "Join", "/games/#{game.id}/join", data: { turbo_method: :post } %>
+        </div>
+
+      <% else %>
+        <%= current_player %>
+        <span class="text-purple-500">
+          (you)
+        </span>
+      <% end %>
 
       <% if game.choice_for(current_player).present? %>
         <br />
@@ -32,34 +43,30 @@
     </p>
   </div>
 
+  <!-- opponent -->
   <div class="flex items-center ml-4 mr-4 mt-4 p-2 mb-4 <%= game.winner?(challenger) && "bg-gradient-to-l from-yellow-50 to-yellow-200" %>">
     <p class="text-gray-500 p-4">
-      <%= challenger %>
+      <%= challenger || "waiting for opponent..." %>
 
-      <% if game.choice_for(challenger).present? %>
         <br />
 
         <span class="text-blue-500">
           <em>
-            move chosen!
+            <% if game.winner?(challenger) %>
+              chose <%= game.choice_for(challenger) %>
+            <% end %>
+
+            <% if !game.winner && game.choice_for(challenger).present? %>
+              move chosen!
+            <% end %>
           </em>
         </span>
-      <% end %>
     </p>
-    <div class="shrink-0 rounded-2xl border border-2 border-blue-500 bg-[url('/hippo02.jpg')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
+    <div class="shrink-0 rounded-2xl border border-2 border-blue-500 bg-[url('/<%= game.avatar_for(challenger) %>')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
   </div>
 
   <% case game.current_state %>
   <% when :awaiting_opponent %>
-    <h3>Waiting for opponent...</h3>
-
-    <% if !game.host?(current_player) %>
-      <h2>Join the game as <%= current_user_name %></h2>
-
-      <%= form_tag "/games/#{game.id}/join", method: :post do %>
-        <%= submit_tag "Join game" %>
-      <% end %>
-    <% end %>
 
   <% when :awaiting_choices %>
 

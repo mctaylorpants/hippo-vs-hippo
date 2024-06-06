@@ -20,6 +20,10 @@ class Game < ApplicationRecord
     host?(player) ? host_choice : opponent_choice
   end
 
+  def avatar_for(player)
+    host?(player) ? "hippo01.jpg" : "hippo02.jpg"
+  end
+
   def host?(player)
     player == host
   end
@@ -29,7 +33,7 @@ class Game < ApplicationRecord
   end
 
   def winner?(player)
-    winner == player
+    winner && winner == player
   end
 
   def can_join?(as:)
