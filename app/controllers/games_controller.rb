@@ -50,6 +50,11 @@ class GamesController < ApplicationController
 
   def find_game
     @game = Game.find_by(id: params[:id]) || Game.find_by(name: params[:id])
+
+    if !@game
+      flash[:error] = "Couldn't find game '#{params[:id]}'"
+      redirect_to root_path
+    end
   end
 
   helper_method :current_user_name
