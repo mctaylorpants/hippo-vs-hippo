@@ -16,7 +16,12 @@ class GamesController < ApplicationController
   end
 
   def show
-    Rails.logger.info("current user: #{current_user_name}")
+    if !@game.host?(current_user_name) &&
+        !@game.opponent?(current_user_name) &&
+        !@game.can_join?(as: current_user_name)
+      flash[:error] = "Two hippos are already at that watering hole. Start a new game or join another!"
+      redirect_to root_path
+    end
   end
 
   def join
