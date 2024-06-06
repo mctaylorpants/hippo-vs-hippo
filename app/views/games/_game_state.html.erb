@@ -1,4 +1,10 @@
 <%= turbo_frame_tag "game_state" do %>
+  <% if game.winner == :draw %>
+    <h1 class="text-center text-gray-500">
+      IT'S A DRAW!
+    </h1>
+  <% end %>
+
   <% if game.winner?(current_player) %>
     <h1 class="text-center text-purple-500">
       YOU WIN!
@@ -52,7 +58,7 @@
 
         <span class="text-blue-500">
           <em>
-            <% if game.winner?(challenger) %>
+            <% if game.winner %>
               chose <%= game.choice_for(challenger) %>
             <% end %>
 
@@ -84,8 +90,10 @@
       </div>
     <% end %>
   <% when :game_over %>
-    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-purple-500">
+    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-blue-500">
       <%= link_to "rematch", "/games/#{game.id}/rematch", data: { turbo_method: :post, turbo_frame: "_top" } %>
+    </div>
+    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-purple-500">
       <%= link_to "new game", Game.new, data: { turbo_method: :post, turbo_frame: "_top" } %>
     </div>
   <% end %>
