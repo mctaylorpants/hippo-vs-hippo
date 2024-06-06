@@ -1,9 +1,17 @@
-<ul>
-  <li>
-    <%= link_to "new game", @game, data: { turbo_method: :post } %>
-  </li>
-  <li>
-    <%= link_to "join game" %>
-  </li>
-</ul>
+<div class="flex justify-center items-center h-screen flex-col">
+  <div>
+    <h1 class="text-xl">
+      <span class="text-blue-500">HIPPO</span>
+      <span class="text-gray-500">vs</span>
+      <span class="text-purple-500">HIPPO</span>
+    </h1>
+  </div>
+  <div>
+    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-purple-500">
+      <%= link_to "new game", @game, data: { turbo_method: :post } %>
+    </div>
 
+    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-blue-500">
+      <%= link_to "join game" %>
+    </div>
+  </div>

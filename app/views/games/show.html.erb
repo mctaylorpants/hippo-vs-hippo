@@ -1,12 +1,17 @@
 <input type="hidden" id="game-id" value="<%= @game.id %>">
 
-<h1>Room name: <strong><%= @game.name %></strong></h1>
+<div class="flex justify-center items-center h-screen flex-col">
 
-<h2>Players</h2>
-<%= turbo_stream_from @game, @game.role_of(current_user_name) %>
-<% if @game.host?(current_user_name) %>
-  <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name } %>
-<% else %>
-  <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name } %>
-<% end %>
+  <div class="bg-[url('/background.svg')] bg-center bg-no-repeat h-48 w-full">
+  </div>
 
+  <p>welcome to:</p>
+  <h1 class="text-center text-purple-500 m-4"><strong><%= @game.display_name %></strong></h1>
+
+  <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
+  <% if @game.host?(current_user_name) %>
+    <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name, challenger: @game.opponent } %>
+  <% else %>
+    <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name, challenger: @game.host } %>
+  <% end %>
+</div>

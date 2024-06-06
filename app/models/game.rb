@@ -28,8 +28,23 @@ class Game < ApplicationRecord
     player == opponent
   end
 
+  def winner?(player)
+    winner == player
+  end
+
   def can_join?(as:)
     host != as && opponent.nil?
+  end
+
+  def display_name
+    name.gsub("-", " ").titleize
+  end
+
+  def display_result
+    winning_choice = winner == host ? host_choice : opponent_choice
+    losing_choice = winner == host ? opponent_choice : host_choice
+
+    "#{winning_choice.capitalize} beats #{losing_choice.capitalize}"
   end
 
   def join(as:)
