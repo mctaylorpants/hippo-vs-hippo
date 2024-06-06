@@ -76,7 +76,7 @@
 
   <% case game.current_state %>
   <% when :awaiting_choices %>
-    <% if game.current_state == :awaiting_choices %>
+    <% if game.current_state == :awaiting_choices && game.choice_for(current_player).blank? %>
       <p class="text-gray-500 text-center">make your move:</p>
       <div class="flex justify-center">
         <div class="rounded-lg bg-purple-200 p-1 m-1">
@@ -91,6 +91,10 @@
           <%= link_to "chomp!", "/games/#{game.id}/choose?choice=chomp", data: { turbo_method: :post } %>
         </div>
       </div>
+    <% end %>
+
+    <% if game.current_state == :awaiting_choices && game.choice_for(current_player).present? %>
+      <p class="text-gray-500 text-center">waiting for your opponent to make their move...</p>
     <% end %>
   <% when :game_over %>
     <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-blue-500">
