@@ -13,7 +13,11 @@ class Game < ApplicationRecord
   validates :opponent_choice, inclusion: { in: VALID_CHOICES }, allow_nil: true
 
   def role_of(player)
-    player == host ? :host : :opponent
+    host?(player) ? :host : :opponent
+  end
+
+  def choice_for(player)
+    host?(player) ? host_choice : opponent_choice
   end
 
   def host?(player)

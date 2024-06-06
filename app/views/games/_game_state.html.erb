@@ -1,16 +1,24 @@
 <%= turbo_frame_tag "game_state" do %>
-  <h1>Welcome to <%= game.name %>, <%= player %>!</h1>
+  <h1>Welcome to <%= game.name %>, <%= current_player %>!</h1>
 
   <% case game.current_state %>
   <% when :awaiting_opponent %>
-    <h2>Join the game as <%= current_user_name %></h2>
+    <h3>Waiting for opponent...</h3>
 
-    <%= form_tag "/games/#{game.id}/join", method: :post do %>
-      <%= submit_tag "Join game" %>
+    <% if !game.host?(current_player) %>
+      <h2>Join the game as <%= current_user_name %></h2>
+
+      <%= form_tag "/games/#{game.id}/join", method: :post do %>
+        <%= submit_tag "Join game" %>
+      <% end %>
     <% end %>
 
   <% when :awaiting_choices %>
-    <h3>Your challenger today is <%= game.host %></h3>
+    <h3>Your challenger today is <%= challenger %></h3>
+
+    <% if game.choice_for(challenger).present? %>
+      <h3>Your opponent has made their move!</h3>
+    <% end %>
 
     <% if game.current_state == :awaiting_choices %>
       <h4>Make your move:</h4>
@@ -20,9 +28,10 @@
         <li><%= link_to "chomp", "/games/#{game.id}/choose?choice=chomp", data: { turbo_method: :post } %></li>
       </ul>
     <% end %>
+
   <% when :game_over %>
-    <h3>You played <%= game.opponent_choice %></h3>
-    <h3>Your opponent played <%= game.host_choice %></h3>
+    <h3>You played <%= game.choice_for(current_player) %></h3>
+    <h3>Your opponent played <%= game.choice_for(challenger) %></h3>
     <h4>The winner is <%= game.winner %>!</h4>
   <% end %>
 <% end %>

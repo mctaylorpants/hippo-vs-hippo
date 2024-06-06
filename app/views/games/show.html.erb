@@ -5,8 +5,8 @@
 <h2>Players</h2>
 <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
 <% if @game.host?(current_user_name) %>
-  <%= render partial: "game_state_for_host", locals: { game: @game, player: current_user_name } %>
+  <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name } %>
 <% else %>
-  <%= render partial: "game_state_for_opponent", locals: { game: @game, player: current_user_name } %>
+  <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name } %>
 <% end %>
 
