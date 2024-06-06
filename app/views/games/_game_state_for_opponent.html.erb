@@ -3,7 +3,7 @@
 
   <% case game.current_state %>
   <% when :awaiting_opponent %>
-    <h2>Join the game as <%= current_user %></h2>
+    <h2>Join the game as <%= current_user_name %></h2>
 
     <%= form_tag "/games/#{game.id}/join", method: :post do %>
       <%= submit_tag "Join game" %>

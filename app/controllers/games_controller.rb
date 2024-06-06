@@ -6,17 +6,17 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.create!(host: current_user)
+    @game = Game.create!(host: current_user_name)
 
     redirect_to @game
   end
 
   def show
-    Rails.logger.info("current user: #{current_user}")
+    Rails.logger.info("current user: #{current_user_name}")
   end
 
   def join
-    if @game.join(as: current_user)
+    if @game.join(as: current_user_name)
       refresh_state
     else
       raise @game.errors.full_messages
@@ -24,7 +24,7 @@ class GamesController < ApplicationController
   end
 
   def choose
-    if @game.host == current_user
+    if @game.host == current_user_name
       @game.update!(host_choice: params[:choice])
     else
       @game.update!(opponent_choice: params[:choice])
@@ -39,8 +39,8 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
   end
 
-  helper_method :current_user
-  def current_user
+  helper_method :current_user_name
+  def current_user_name
     session[:user_name] ||= Player.new.name
   end
 
