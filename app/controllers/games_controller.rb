@@ -5,6 +5,10 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
+  def index
+    redirect_to game_path(params[:game_id])
+  end
+
   def create
     @game = Game.create!(host: current_user_name)
 
@@ -41,7 +45,7 @@ class GamesController < ApplicationController
   private
 
   def find_game
-    @game = Game.find(params[:id])
+    @game = Game.find_by(id: params[:id]) || Game.find_by(name: params[:id])
   end
 
   helper_method :current_user_name

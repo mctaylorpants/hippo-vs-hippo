@@ -6,7 +6,8 @@
   </div>
 
   <p>welcome to:</p>
-  <h1 class="text-center text-purple-500 m-4"><strong><%= @game.display_name %></strong></h1>
+  <h1 class="text-center text-purple-500 m-4 mb-0"><strong><%= @game.display_name %></strong></h1>
+  <p class="text-xs text-gray-500 mb-4"><%= link_to request.url %></p>
 
   <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
   <% if @game.host?(current_user_name) %>

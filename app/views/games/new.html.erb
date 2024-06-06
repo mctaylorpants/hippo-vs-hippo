@@ -11,7 +11,10 @@
       <%= link_to "new game", @game, data: { turbo_method: :post } %>
     </div>
 
-    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-blue-500">
-      <%= link_to "join game" %>
-    </div>
+    <%= form_tag "/games", method: :get do %>
+      <div class="rounded-lg bg-gray-100 m-4 p-4 border text-blue-500">
+        <%= text_field_tag :game_id, nil, placeholder: "e.g. haunted-estuary", class: "p-1" %>
+        <%= submit_tag "join game" %>
+      </div>
+    <% end %>
   </div>
