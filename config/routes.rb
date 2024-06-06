@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root "games#new"
 
   resources :games
-  post "games/:id/join" => "games#join", as: :join_game
-  post "games/:id/choose" => "games#choose", as: :make_choice
+  post "games/:id/join" => "games#join"
+  post "games/:id/choose" => "games#choose"
+  post "games/:id/rematch" => "games#rematch"
 end

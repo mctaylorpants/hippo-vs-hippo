@@ -66,10 +66,7 @@
   </div>
 
   <% case game.current_state %>
-  <% when :awaiting_opponent %>
-
   <% when :awaiting_choices %>
-
     <% if game.current_state == :awaiting_choices %>
       <p class="text-gray-500 text-center">make your move:</p>
       <div class="flex justify-center">
@@ -86,5 +83,10 @@
         </div>
       </div>
     <% end %>
+  <% when :game_over %>
+    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-purple-500">
+      <%= link_to "rematch", "/games/#{game.id}/rematch", data: { turbo_method: :post, turbo_frame: "_top" } %>
+      <%= link_to "new game", Game.new, data: { turbo_method: :post, turbo_frame: "_top" } %>
+    </div>
   <% end %>
 <% end %>

@@ -89,6 +89,11 @@ class Game < ApplicationRecord
     end
   end
 
+
+  def rematch
+    update(host_choice: nil, opponent_choice: nil)
+  end
+
   def reset!
     update!(opponent: nil, host_choice: nil, opponent_choice: nil)
   end

@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :find_game, only: [:show, :join, :choose]
+  before_action :find_game, only: [:show, :join, :choose, :rematch]
 
   def new
     @game = Game.new
@@ -30,6 +30,11 @@ class GamesController < ApplicationController
       @game.update!(opponent_choice: params[:choice])
     end
 
+    refresh_state
+  end
+
+  def rematch
+    @game.rematch
     refresh_state
   end
 
