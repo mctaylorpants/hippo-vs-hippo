@@ -11,8 +11,7 @@ class GamesController < ApplicationController
 
   def create
     @game = Game.create!(host: current_user_name)
-
-    redirect_to @game
+    redirect_to game_path(@game.name)
   end
 
   def show
