@@ -79,17 +79,11 @@
     <% if game.current_state == :awaiting_choices && game.choice_for(current_player).blank? %>
       <p class="text-gray-500 text-center">make your move:</p>
       <div class="flex justify-center">
-        <div class="rounded-lg bg-purple-200 p-1 m-1">
-          <%= link_to "charge!", "/games/#{game.id}/choose?choice=charge", data: { turbo_method: :post } %>
-        </div>
+        <%= link_to "charge!", "/games/#{game.id}/choose?choice=charge", data: { turbo_method: :post }, class: "block rounded-lg bg-purple-200 p-1 m-1" %>
 
-        <div class="rounded-lg bg-blue-200 p-1 m-1">
-          <%= link_to "submerge!", "/games/#{game.id}/choose?choice=submerge", data: { turbo_method: :post } %>
-        </div>
+        <%= link_to "submerge!", "/games/#{game.id}/choose?choice=submerge", data: { turbo_method: :post }, class: "block rounded-lg bg-blue-200 p-1 m-1" %>
 
-        <div class="rounded-lg bg-orange-200 p-1 m-1">
-          <%= link_to "chomp!", "/games/#{game.id}/choose?choice=chomp", data: { turbo_method: :post } %>
-        </div>
+        <%= link_to "chomp!", "/games/#{game.id}/choose?choice=chomp", data: { turbo_method: :post }, class: "block rounded-lg bg-orange-200 p-1 m-1" %>
       </div>
     <% end %>
 
