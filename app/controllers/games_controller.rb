@@ -6,7 +6,12 @@ class GamesController < ApplicationController
   end
 
   def index
-    redirect_to game_path(params[:game_id])
+    if params[:game_id].present?
+      redirect_to game_path(params[:game_id])
+    else
+      flash[:error] = "Enter a game ID to continue!"
+      redirect_to root_path
+    end
   end
 
   def create
