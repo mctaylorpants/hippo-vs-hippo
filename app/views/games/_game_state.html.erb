@@ -97,11 +97,35 @@
       <p class="text-gray-500 text-center">waiting for your opponent to make their move...</p>
     <% end %>
   <% when :game_over %>
-    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-blue-500">
-      <%= link_to "rematch", "/games/#{game.id}/rematch", data: { turbo_method: :post, turbo_frame: "_top" } %>
-    </div>
-    <div class="rounded-lg bg-gray-100 m-4 p-4 border text-center text-purple-500">
-      <%= link_to "new game", Game.new, data: { turbo_method: :post, turbo_frame: "_top" } %>
-    </div>
+    <script>
+      var count = 3;
+      var rematchButton = document.querySelector("a#rematch");
+
+      if (rematchButton) {
+        rematchButton.innerText = `rematch (${count})`;
+
+        rematchButton.classList.add("pointer-events-none");
+
+        rematchButton.classList.remove("text-blue-500");
+        rematchButton.classList.add("text-gray-500");
+
+        var textUpdater = setInterval(() => {
+          count--;
+
+          if (count < 1) {
+            clearInterval(textUpdater);
+            rematchButton.innerText = "rematch";
+            rematchButton.classList.remove("pointer-events-none");
+
+            rematchButton.classList.remove("text-gray-500");
+            rematchButton.classList.add("text-blue-500");
+          } else {
+            rematchButton.innerText = `rematch (${count})`;
+          }
+        }, 1000);
+      }
+    </script>
+    <%= link_to "rematch", "/games/#{game.id}/rematch", data: { turbo_method: :post, turbo_frame: "_top" }, id: "rematch", class: "block rounded-lg bg-gray-100 m-4 p-4 border text-center text-blue-500" %>
+    <%= link_to "new game", Game.new, data: { turbo_method: :post, turbo_frame: "_top" }, class: "block rounded-lg bg-gray-100 m-4 p-4 border text-center text-purple-500" %>
   <% end %>
 <% end %>
