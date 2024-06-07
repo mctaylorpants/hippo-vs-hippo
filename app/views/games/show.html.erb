@@ -1,3 +1,10 @@
+<script>
+  function copyToClipboard() {
+    navigator.clipboard.writeText(document.querySelector('p#game-url').textContent);
+    alert("Link copied! Send it to your hippo buddy.")
+  }
+</script>
+
 <input type="hidden" id="game-id" value="<%= @game.id %>">
 
 <div class="flex justify-center items-center h-screen flex-col">
@@ -6,7 +13,7 @@
 
   <p>welcome to:</p>
   <h1 class="text-center text-purple-500 m-4 mb-0"><strong><%= @game.display_name %></strong></h1>
-  <p class="text-xs text-gray-500 mb-4 cursor-pointer" id="game-url"><%= request.url %></p>
+  <p class="text-xs text-gray-500 mb-4 cursor-pointer" id="game-url" onclick="window.copyToClipboard()"><%= request.url %></p>
 
   <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
   <% if @game.host?(current_user_name) %>
@@ -15,12 +22,3 @@
     <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name, challenger: @game.host } %>
   <% end %>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelector('p#game-url').addEventListener('click', function() {
-      navigator.clipboard.writeText(this.textContent);
-      alert("Link copied! Send it to your hippo buddy.")
-    });
-  });
-</script>
