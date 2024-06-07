@@ -7,13 +7,17 @@
 
 <input type="hidden" id="game-id" value="<%= @game.id %>">
 
-<div class="flex justify-center items-center h-screen flex-col">
+<div class="flex  items-center flex-col">
 
   <div class="bg-[url('/background.svg')] bg-center bg-no-repeat h-48 w-full min-h-24"></div>
 
   <p>welcome to:</p>
   <h1 class="text-center text-purple-500 m-4 mb-0"><strong><%= @game.display_name %></strong></h1>
-  <p class="text-xs text-gray-500 mb-4 cursor-pointer" id="game-url" onclick="window.copyToClipboard()"><%= request.url %></p>
+
+  <div class="rounded-lg bg-gray-50 p-2">
+    <p class="text-sm text-center text-gray-800">Tap the link to copy:</p>
+    <p class="text-xs text-gray-500 mb-4 cursor-pointer" id="game-url" onclick="window.copyToClipboard()"><%= request.url %></p>
+  </div>
 
   <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
   <% if @game.host?(current_user_name) %>
