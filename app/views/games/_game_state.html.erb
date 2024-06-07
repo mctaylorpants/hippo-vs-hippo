@@ -26,7 +26,7 @@
 
   <!-- current player -->
   <div class="flex items-center ml-4 mr-4 p-2 <%= game.winner?(current_player) && "bg-gradient-to-l from-yellow-50 to-yellow-200" %>">
-    <div class="shrink-0 rounded-2xl border border-2 border-purple-500 bg-[url('/<%= game.avatar_for(current_player) %>')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
+    <div class="shrink-0 rounded-2xl border border-2 border-purple-500 bg-[url('/<%= game.avatar_for(current_player) %>')] bg-bottom bg-no-repeat bg-contain w-24 h-24"></div>
     <p class="text-gray-500 p-4">
       <% if game.current_state == :awaiting_opponent && !game.host?(current_player) %>
         <div class="max-w-40 text-pretty rounded-lg text-center bg-gray-100 m-4 p-4 border text-blue-500">
@@ -71,7 +71,7 @@
           </em>
         </span>
     </p>
-    <div class="shrink-0 rounded-2xl border border-2 border-blue-500 bg-[url('/<%= game.avatar_for(challenger) %>')] bg-center bg-no-repeat bg-contain w-24 h-24"></div>
+    <div class="shrink-0 rounded-2xl border border-2 border-blue-500 bg-[url('/<%= game.avatar_for(challenger) %>')] bg-bottom bg-no-repeat bg-contain w-24 h-24"></div>
   </div>
 
   <% case game.current_state %>
