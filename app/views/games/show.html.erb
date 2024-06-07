@@ -14,11 +14,6 @@
   <p>welcome to:</p>
   <h1 class="text-center text-purple-500 m-4 mb-0"><strong><%= @game.display_name %></strong></h1>
 
-  <div class="rounded-lg bg-gray-50 p-2">
-    <p class="text-sm text-center text-gray-800">Tap the link to copy:</p>
-    <p class="text-xs text-gray-500 mb-4 cursor-pointer" id="game-url" onclick="window.copyToClipboard()"><%= request.url %></p>
-  </div>
-
   <%= turbo_stream_from @game, @game.role_of(current_user_name) %>
   <% if @game.host?(current_user_name) %>
     <%= render partial: "game_state", locals: { game: @game, current_player: current_user_name, challenger: @game.opponent } %>
